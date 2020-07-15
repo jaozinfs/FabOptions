@@ -10,11 +10,13 @@
         <OnClick
             app:clickAction="toggle"
             app:targetId="@id/fab1" />
+
         <KeyFrameSet>
             <KeyAttribute
                 android:alpha="0"
                 app:framePosition="1"
                 app:motionTarget="@id/background" />
+
             <KeyAttribute
                 android:alpha="1.0"
                 app:framePosition="100"

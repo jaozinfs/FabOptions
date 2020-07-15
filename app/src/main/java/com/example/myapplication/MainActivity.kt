@@ -1,15 +1,22 @@
 package com.example.myapplication
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.flow.collect
 
 class MainActivity : AppCompatActivity() {
+    private val viewModel by lazy {
+        ViewModelProvider(this)[MainActivityViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +35,14 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this@MainActivity, "Fab 2", Toast.LENGTH_LONG).show()
         }
         fab3.setOnClickListener {
-            Toast.makeText(this@MainActivity, "Fab 3", Toast.LENGTH_LONG).show()
+            viewModel.increment()
         }
+        lifecycleScope.launchWhenCreated {
+            viewModel.state.collect {
+                Log.d("Teste", "Size: $it")
+            }
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
