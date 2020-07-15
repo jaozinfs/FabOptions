@@ -65,11 +65,12 @@ class SecondFragment : Fragment(), MotionLayout.TransitionListener {
 
     fun hide() {
         hideJob?.cancel()
-        hideJob = lifecycleScope.launch {
-            delay(1300)
-            if (!userInteract)
-            player.transitionToStart()
-        }
+        if (!userInteract)
+            hideJob = lifecycleScope.launch {
+                delay(1300)
+                if (!userInteract)
+                    player.transitionToStart()
+            }
     }
 
 
